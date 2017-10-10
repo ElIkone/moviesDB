@@ -22,7 +22,8 @@ public class Network {
     private final static String baseURL =
             "https://api.themoviedb.org/3/movie/";
     private final static String paramKey = "api_key";
-    private final static String keyValue = "1609818c5e2f435330c30dba561e86bc";
+    private final static String keyValue = "";
+    ///Replace KeyValue with your key from the movie Db
     private final static String popular = "popular";
     private final static String rated = "top_rated";
 

@@ -3,6 +3,10 @@ package com.example.ben.moviesdb;
 import android.net.Uri;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,18 +15,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import org.json.JSONArray;
-
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 
 public class Network {
     private final static String baseURL =
             "https://api.themoviedb.org/3/movie/";
     private final static String paramKey = "api_key";
-    private final static String keyValue = "";
+    private final static String keyValue = "1609818c5e2f435330c30dba561e86bc";
     ///Replace KeyValue with your key from the movie Db
     private final static String popular = "popular";
     private final static String rated = "top_rated";
@@ -78,6 +77,7 @@ public class Network {
             urlConnection.disconnect();
         }
     }
+
     public ArrayList<Movie> getPopularMovies() {
         String url = buildUrl("popular", "").toString();
         return downloadGalleryItems(url);
@@ -106,6 +106,7 @@ public class Network {
         }
         return items;
     }
+
     private void parseItems(List<Movie> items, JSONObject jsonBody)
             throws IOException, JSONException {
 

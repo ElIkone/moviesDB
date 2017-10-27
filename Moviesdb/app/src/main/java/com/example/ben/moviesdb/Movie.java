@@ -2,29 +2,10 @@ package com.example.ben.moviesdb;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Movie implements Parcelable {
-    private String title;
-    @SerializedName("poster_path")
-    private String poster;
-    @SerializedName("overview")
-    private String description;
-    @SerializedName("release_date")
-    private String release_date;
-    @SerializedName("vote_average")
-    private String average;
-    private String url_image = "http://image.tmdb.org/t/p/w500";
-
-    public Movie() {}
-    protected Movie(Parcel in) {
-        title = in.readString();
-        poster = in.readString();
-        description = in.readString();
-        release_date = in.readString();
-        average = in.readString();
-    }
-
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
         @Override
         public Movie createFromParcel(Parcel in) {
@@ -36,6 +17,27 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
+    private String title;
+    @SerializedName("poster_path")
+    private String poster;
+    @SerializedName("overview")
+    private String description;
+    @SerializedName("release_date")
+    private String release_date;
+    @SerializedName("vote_average")
+    private String average;
+    private String url_image = "http://image.tmdb.org/t/p/w500";
+
+    public Movie() {
+    }
+
+    protected Movie(Parcel in) {
+        title = in.readString();
+        poster = in.readString();
+        description = in.readString();
+        release_date = in.readString();
+        average = in.readString();
+    }
 
     public String getTitle() {
         return title;
@@ -56,19 +58,23 @@ public class Movie implements Parcelable {
     public String getDescription() {
         return description;
     }
-    public String getYear() {
-        return release_date;
-    }
-    public String getAverage() {
-        return average;
-    }
-    public void setAverage(String average) {
-        this.average = average;
-    }
 
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getYear() {
+        return release_date;
+    }
+
+    public String getAverage() {
+        return average;
+    }
+
+    public void setAverage(String average) {
+        this.average = average;
+    }
+
     public void setRelease_date(String release_date) {
         this.release_date = release_date;
     }

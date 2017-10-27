@@ -1,28 +1,27 @@
 package com.example.ben.moviesdb;
-        import android.os.Bundle;
-        import android.support.v7.app.AppCompatActivity;
-        import android.widget.ImageView;
-        import android.widget.TextView;
 
-        import com.squareup.picasso.Picasso;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-        import org.w3c.dom.Text;
+import com.squareup.picasso.Picasso;
 
-public class SecondActivity extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE = "movie";
-
-    private Movie mMovie;
+    public String year2;
     TextView year;
     ImageView poster;
     TextView title;
     TextView description;
     TextView average;
-    public String year2;
+    private Movie mMovie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.media_delegate);
+
         if (getIntent().hasExtra(EXTRA_MOVIE)) {
             mMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
         } else {
@@ -38,9 +37,9 @@ public class SecondActivity extends AppCompatActivity {
         title.setText(mMovie.getTitle());
         description.setText(mMovie.getDescription());
         year2 = mMovie.getYear();
-        year2 = year2.substring(0,4);
+        year2 = year2.substring(0, 4);
         year.setText(year2);
-        average.setText(mMovie.getAverage()+ "/10");
+        average.setText(mMovie.getAverage() + "/10");
 
         Picasso.with(this)
                 .load(mMovie.getPoster())

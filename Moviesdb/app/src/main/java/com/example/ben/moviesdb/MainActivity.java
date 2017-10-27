@@ -4,16 +4,16 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Movie> mMovieItems = new ArrayList<>();
     private ArrayList<Movie> topRated = new ArrayList<>();
     private String TAG = MainActivity.class.getSimpleName();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +61,37 @@ public class MainActivity extends AppCompatActivity {
         return isAvailable;
     }
 
+    private void setupAdapter() {
+        mRecycleAdapter.setMovieList(mMovieItems);
+    }
+
+    private void setupAdapterRated() {
+        mRecycleAdapter.setMovieList(topRated);
+    }
+
+    private void getPopularMovies() {
+        URL searchUrl = Network.buildUrl("popular", " ");
+        new GetQueryTask().execute(searchUrl);
+    }
+
+    private void getTopMovies() {
+        URL searchUrl = Network.buildUrl("rated", " ");
+        new GetTopQueryTask().execute(searchUrl);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                getPopularMovies();
+                return true;
+            case R.id.action_rated:
+                getTopMovies();
+                return true;
+        }
+        return false;
+    }
+
     private class GetQueryTask extends AsyncTask<URL, Void, ArrayList<Movie>> {
 
         @Override
@@ -75,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return mMovieItems;
         }
+
         @Override
         protected void onPostExecute(ArrayList<Movie> newMovieItems) {
             if (mMovieItems != null && mMovieItems.size() > 0) {
@@ -84,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     private class GetTopQueryTask extends AsyncTask<URL, Void, ArrayList<Movie>> {
         @Override
         protected ArrayList<Movie> doInBackground(URL... params) {
@@ -106,34 +138,5 @@ public class MainActivity extends AppCompatActivity {
             } else {
             }
         }
-    }
-
-    private void setupAdapter() {
-        mRecycleAdapter.setMovieList(mMovieItems);
-    }
-    private void setupAdapterRated() {
-        mRecycleAdapter.setMovieList(topRated);
-    }
-    private void getPopularMovies() {
-        URL searchUrl = Network.buildUrl("popular", " ");
-        new GetQueryTask().execute(searchUrl);
-    }
-
-    private void getTopMovies() {
-        URL searchUrl = Network.buildUrl("rated", " ");
-        new GetTopQueryTask().execute(searchUrl);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)  {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                getPopularMovies();
-                return true;
-            case R.id.action_rated:
-                getTopMovies();
-                return true;
-        }
-        return false;
     }
 }
